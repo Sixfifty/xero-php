@@ -5,7 +5,7 @@ use XeroPHP\Remote;
 use XeroPHP\Models\Accounting\Organisation\ExternalLink;
 use XeroPHP\Models\Accounting\Organisation\PaymentTerm;
 
-class Organisation extends Remote\Object
+class Organisation extends Remote\Model
 {
 
     /**
@@ -136,15 +136,15 @@ class Organisation extends Remote\Object
      */
 
     /**
-     * Organisation Type
-     *
-     * @property string OrganisationEntityType
-     */
-
-    /**
      * Timezone specifications
      *
      * @property string Timezone
+     */
+
+    /**
+     * Organisation Type
+     *
+     * @property string OrganisationEntityType
      */
 
     /**
@@ -296,14 +296,15 @@ class Organisation extends Remote\Object
             'PeriodLockDate' => [false, self::PROPERTY_TYPE_STRING, null, false, false],
             'EndOfYearLockDate' => [false, self::PROPERTY_TYPE_STRING, null, false, false],
             'CreatedDateUTC' => [false, self::PROPERTY_TYPE_TIMESTAMP, '\\DateTimeInterface', false, false],
-            'OrganisationEntityType' => [false, self::PROPERTY_TYPE_ENUM, null, false, false],
             'Timezone' => [false, self::PROPERTY_TYPE_STRING, null, false, false],
+            'OrganisationEntityType' => [false, self::PROPERTY_TYPE_ENUM, null, false, false],
             'ShortCode' => [false, self::PROPERTY_TYPE_STRING, null, false, false],
             'LineOfBusiness' => [false, self::PROPERTY_TYPE_STRING, null, false, false],
             'Addresses' => [false, self::PROPERTY_TYPE_OBJECT, 'Accounting\\Address', true, false],
             'Phones' => [false, self::PROPERTY_TYPE_OBJECT, 'Accounting\\Phone', true, false],
             'ExternalLinks' => [false, self::PROPERTY_TYPE_OBJECT, 'Accounting\\Organisation\\ExternalLink', true, false],
-            'PaymentTerms' => [false, self::PROPERTY_TYPE_OBJECT, 'Accounting\\Organisation\\PaymentTerm', true, false]
+            'PaymentTerms' => [false, self::PROPERTY_TYPE_OBJECT, 'Accounting\\Organisation\\PaymentTerm', true, false],
+            'OrganisationID' => [false, self::PROPERTY_TYPE_STRING, null, false, false]
         ];
     }
 
@@ -714,25 +715,6 @@ class Organisation extends Remote\Object
     /**
      * @return string
      */
-    public function getOrganisationEntityType()
-    {
-        return $this->_data['OrganisationEntityType'];
-    }
-
-    /**
-     * @param string $value
-     * @return Organisation
-     */
-    public function setOrganisationEntityType($value)
-    {
-        $this->propertyUpdated('OrganisationEntityType', $value);
-        $this->_data['OrganisationEntityType'] = $value;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function getTimezone()
     {
         return $this->_data['Timezone'];
@@ -746,6 +728,25 @@ class Organisation extends Remote\Object
     {
         $this->propertyUpdated('Timezone', $value);
         $this->_data['Timezone'] = $value;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrganisationEntityType()
+    {
+        return $this->_data['OrganisationEntityType'];
+    }
+
+    /**
+     * @param string $value
+     * @return Organisation
+     */
+    public function setOrganisationEntityType($value)
+    {
+        $this->propertyUpdated('OrganisationEntityType', $value);
+        $this->_data['OrganisationEntityType'] = $value;
         return $this;
     }
 
@@ -879,5 +880,11 @@ class Organisation extends Remote\Object
         return $this;
     }
 
-
+    /**
+     * @return string
+     */
+    public function getOrganisationID()
+    {
+        return $this->_data['OrganisationID'];
+    }
 }

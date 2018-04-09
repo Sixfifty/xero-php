@@ -9,15 +9,19 @@ use XeroPHP\Exception;
 
 trait AttachmentTrait
 {
-    public function addAttachment(Attachment $attachment)
+    public function addAttachment(Attachment $attachment, $include_online = false)
     {
         /**
          * @var Object $this
          */
-        $uri = sprintf('%s/%s/Attachments/%s', $this::getResourceURI(), $this->getGUID(), $attachment->getFileName());
+        $uri = sprintf('%s/%s/Attachments/%s', $this::getResourceURI(), $this->getGUID(), rawurlencode($attachment->getFileName()));
 
         $url = new URL($this->_application, $uri);
         $request = new Request($this->_application, $url, Request::METHOD_POST);
+
+        if($include_online){
+            $request->setParameter('IncludeOnline', 'true');
+        }
 
         $request->setBody($attachment->getContent(), $attachment->getMimeType());
         $request->send();
